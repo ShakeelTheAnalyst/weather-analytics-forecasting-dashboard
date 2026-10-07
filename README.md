@@ -1,5 +1,8 @@
 # ⚡ Real-Time Weather Analytics & Forecasting Dashboard
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://weather-analytics-forecasting-dashboard-lorg7cxavhzfxgiyirbiki.streamlit.app/)
+
+🚀 **Live Interactive App:** [Open Live Dashboard](https://weather-analytics-forecasting-dashboard-lorg7cxavhzfxgiyirbiki.streamlit.app/)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.30+-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io)
 [![Power BI](https://img.shields.io/badge/Power_BI-Desktop_%26_Service-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://powerbi.microsoft.com)
