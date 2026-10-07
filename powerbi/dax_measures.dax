@@ -1,0 +1,155 @@
+/* =========================================================================================
+   POWER BI DAX MEASURE LIBRARY
+   Project: Real-Time Weather Analytics & Forecasting Dashboard
+   Architecture: Star Schema (Dim_City, Dim_Date, Fact_Weather_Observations, Fact_Weather_Forecasts)
+   ========================================================================================= */
+
+// -----------------------------------------------------------------------------------------
+// SECTION 1: CORE METEOROLOGICAL KPIS
+// -----------------------------------------------------------------------------------------
+
+// 1. Average Temperature (°C)
+[Avg Temperature C] = 
+AVERAGE(Fact_Weather_Observations[Temperature_C])
+
+// 2. Average Temperature (°F)
+[Avg Temperature F] = 
+AVERAGE(Fact_Weather_Observations[Temperature_F])
+
+// 3. Max Recorded Temperature (°C)
+[Max Temperature C] = 
+MAX(Fact_Weather_Observations[Temperature_C])
+
+// 4. Min Recorded Temperature (°C)
+[Min Temperature C] = 
+MIN(Fact_Weather_Observations[Temperature_C])
+
+// 5. Diurnal Temperature Range (Daily Thermal Amplitude)
+[Thermal Amplitude C] = 
+[Max Temperature C] - [Min Temperature C]
+
+// 6. Average Relative Humidity (%)
+[Avg Humidity Pct] = 
+AVERAGE(Fact_Weather_Observations[Humidity_Pct])
+
+// 7. Average Barometric Pressure (hPa)
+[Avg Barometric Pressure] = 
+AVERAGE(Fact_Weather_Observations[Pressure_hPa])
+
+// 8. Average Wind Speed (m/s)
+[Avg Wind Speed] = 
+AVERAGE(Fact_Weather_Observations[WindSpeed_mps])
+
+// 9. Average Feels-Like Temperature (°C)
+[Avg Feels Like C] = 
+AVERAGE(Fact_Weather_Observations[FeelsLike_C])
+
+// 10. Steadman Heat Stress Index (°C)
+[Avg Heat Index C] = 
+AVERAGE(Fact_Weather_Observations[HeatIndex_C])
+
+
+// -----------------------------------------------------------------------------------------
+// SECTION 2: STATISTICAL CLIMATOLOGICAL ANOMALIES
+// -----------------------------------------------------------------------------------------
+
+// 11. Total Count of Climatological Anomalies
+[Anomaly Count] = 
+CALCULATE(
+    COUNTROWS(Fact_Weather_Observations),
+    Fact_Weather_Observations[Is_Anomaly] = TRUE()
+)
+
+// 12. Severe Anomaly Count
+[Severe Anomaly Count] = 
+CALCULATE(
+    COUNTROWS(Fact_Weather_Observations),
+    Fact_Weather_Observations[Anomaly_Severity] = "Severe Anomaly"
+)
+
+// 13. Moderate Warning Count
+[Moderate Warning Count] = 
+CALCULATE(
+    COUNTROWS(Fact_Weather_Observations),
+    Fact_Weather_Observations[Anomaly_Severity] = "Moderate Warning"
+)
+
+// 14. Anomaly Incident Rate (%)
+[Anomaly Rate Pct] = 
+DIVIDE(
+    [Anomaly Count],
+    COUNTROWS(Fact_Weather_Observations),
+    0
+) * 100
+
+// 15. Average Climatological Z-Score
+[Avg Anomaly ZScore] = 
+AVERAGE(Fact_Weather_Observations[Z_Score])
+
+// 16. Storm Front Warning Indicator (Pressure Drop <= -6 hPa)
+[Storm Front Alerts] = 
+CALCULATE(
+    COUNTROWS(Fact_Weather_Observations),
+    Fact_Weather_Observations[Pressure_Delta_3h] <= -6.0
+)
+
+
+// -----------------------------------------------------------------------------------------
+// SECTION 3: MACHINE LEARNING FORECASTING & EVALUATION
+// -----------------------------------------------------------------------------------------
+
+// 17. ML Predicted Temperature (°C)
+[Predicted Temperature C] = 
+AVERAGE(Fact_Weather_Forecasts[Predicted_Temp_C])
+
+// 18. Upper Confidence Limit (95%)
+[Forecast Upper Bound C] = 
+AVERAGE(Fact_Weather_Forecasts[Upper_Bound_C])
+
+// 19. Lower Confidence Limit (95%)
+[Forecast Lower Bound C] = 
+AVERAGE(Fact_Weather_Forecasts[Lower_Bound_C])
+
+// 20. Confidence Band Width (°C)
+[Confidence Margin Width] = 
+[Forecast Upper Bound C] - [Forecast Lower Bound C]
+
+// 21. Average Model Confidence (%)
+[Avg Model Confidence Pct] = 
+AVERAGE(Fact_Weather_Forecasts[Model_Confidence_Pct])
+
+// 22. Forecast Accuracy (%)
+[Overall Forecast Accuracy Pct] = 
+AVERAGE(Fact_Weather_Forecasts[Forecast_Accuracy_Pct])
+
+// 23. Temperature Forecast Delta vs Current Baseline
+[Forecast Delta vs Current] = 
+[Predicted Temperature C] - [Avg Temperature C]
+
+
+// -----------------------------------------------------------------------------------------
+// SECTION 4: TIME INTELLIGENCE & ROLLING CLIMATOLOGY
+// -----------------------------------------------------------------------------------------
+
+// 24. 7-Day Rolling Moving Average Temperature (°C)
+[7D Rolling Avg Temp C] = 
+CALCULATE(
+    [Avg Temperature C],
+    DATESINPERIOD(
+        Dim_Date[Date],
+        LASTDATE(Dim_Date[Date]),
+        -7,
+        DAY
+    )
+)
+
+// 25. Prior Week Temperature (°C)
+[Prior Week Temp C] = 
+CALCULATE(
+    [Avg Temperature C],
+    DATEADD(Dim_Date[Date], -7, DAY)
+)
+
+// 26. Week-over-Week Temperature Variance (°C)
+[WoW Temp Variance C] = 
+[Avg Temperature C] - [Prior Week Temp C]

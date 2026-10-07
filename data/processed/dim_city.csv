@@ -1,0 +1,13 @@
+CityKey,CityName,Country,Region,Latitude,Longitude,Coordinates,ClimateZone,Population
+1,New York,USA,North America,40.7128,-74.006,"40.7128,-74.006",Humid Continental,8336000
+2,London,UK,Europe,51.5074,-0.1278,"51.5074,-0.1278",Temperate Oceanic,8982000
+3,Tokyo,Japan,Asia-Pacific,35.6762,139.6503,"35.6762,139.6503",Humid Subtropical,13960000
+4,Paris,France,Europe,48.8566,2.3522,"48.8566,2.3522",Oceanic,2161000
+5,Sydney,Australia,Oceania,-33.8688,151.2093,"-33.8688,151.2093",Humid Subtropical,5312000
+6,Dubai,UAE,Middle East,25.2048,55.2708,"25.2048,55.2708",Hot Arid / Desert,3331000
+7,Singapore,Singapore,Asia-Pacific,1.3521,103.8198,"1.3521,103.8198",Tropical Rainforest,5686000
+8,Mumbai,India,Asia-Pacific,19.076,72.8777,"19.076,72.8777",Tropical Wet and Dry,12480000
+9,Toronto,Canada,North America,43.6532,-79.3832,"43.6532,-79.3832",Humid Continental,2794000
+10,Berlin,Germany,Europe,52.52,13.405,"52.52,13.405",Temperate Oceanic,3645000
+11,São Paulo,Brazil,South America,-23.5505,-46.6333,"-23.5505,-46.6333",Humid Subtropical,12330000
+12,Cape Town,South Africa,Africa,-33.9249,18.4241,"-33.9249,18.4241",Mediterranean,4618000
